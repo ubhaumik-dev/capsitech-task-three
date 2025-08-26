@@ -4,16 +4,14 @@ import '../App.css';
 import { Link } from 'react-router-dom';
 const Data = () => {
 
-const[storedData,setStoredData] = useState('');
+//let localStorageData = JSON.parse(localStorage.getItem('FormData'));
+const[storedData,setStoredData] = useState([]);
 useEffect(() => {
-  const storedData = localStorage.getItem('FormData');
-    if(storedData)
-        setStoredData(storedData);
-  
+  let localStorageData = localStorage.getItem('FormData');
+    if(localStorageData)
+    setStoredData(JSON.parse(localStorageData));
 }, [])
-
 const variable = localStorage.getItem('FormData');
-
   return (
     (variable===null) ? 
     (   <> 
@@ -32,8 +30,11 @@ const variable = localStorage.getItem('FormData');
     
     <div>
         
-        
-    {storedData} 
+    {Object.keys(storedData).map((entry,index)=>(
+      <div key={index}>
+       <h3>{index}</h3>
+      </div>
+    ))}
     
     </div>
     </>
