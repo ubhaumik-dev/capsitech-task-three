@@ -28,7 +28,7 @@ const StudentForm = () => {
       }}
     >
       {(formik) => (
-        <div className="body">
+        <div className="body max-w-lg w-full mx-auto">
           <form className="form" onSubmit={formik.handleSubmit}>
             <h1 className="heading"> Student Registration Form</h1>
             <label htmlFor="firstName">First Name</label>
