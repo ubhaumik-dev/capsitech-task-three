@@ -1,8 +1,26 @@
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-const StudentForm = () => {
+import { useEffect } from "react";
+
+interface EditFormProps{
+  editIndex: number | null;
+  setEditIndex: React.Dispatch<React.SetStateAction<number|null>>
+}
+
+
+
+const StudentForm = (props: EditFormProps) => {
   const navigate = useNavigate();
+  useEffect(() => {
+    const index = props.editIndex;
+    if(index !==null)
+    {
+      console.log("index is" ,index);
+
+    }
+  }, [])
+  
   return (
     <Formik
       initialValues={{ firstName: "", Age: "", email: "", course: "" }}

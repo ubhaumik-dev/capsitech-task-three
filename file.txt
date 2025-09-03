@@ -1,0 +1,35 @@
+Steps to add Edit functionality:
+
+Identify the item to edit
+
+In your Data component (where you list the entries), add an Edit button beside each item.
+
+When clicked, call a function (passed down from App) with the index or unique id of that item.
+
+Lift the edit state up to App
+
+In App, keep a state like editIndex (default null).
+
+When user clicks "Edit", set editIndex to that item’s index.
+
+Pass edit data to Form
+
+When rendering Form, check if editIndex is not null.
+
+If yes, fetch that item’s data from localStorage/storedData and prefill the form with it.
+
+Handle form submit for edit mode
+
+If editIndex is null → treat it as Add new entry.
+
+If editIndex has a value → update that entry in storedData instead of adding a new one.
+
+After saving, reset editIndex back to null.
+
+Sync with localStorage
+
+After updating the entry in storedData, update localStorage as well (just like you do with add/delete).
+
+Navigation
+
+After editing is done, navigate back to Data page to see the updated list.

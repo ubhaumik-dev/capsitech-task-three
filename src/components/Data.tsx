@@ -2,7 +2,11 @@
 import { useEffect, useState } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
-const Data = () => {
+
+type DataProps = {
+  handleEdit: (i:number) => void;
+}
+const Data = (props:DataProps) => {
 
 type FormData ={
   firstName: string,
@@ -10,33 +14,31 @@ type FormData ={
   email: string,
   course: string
 }
-//const[data,setData] = useState<FormData[]>([]);
+
 const[storedData,setStoredData] = useState<FormData[]>([]);
+
 useEffect(() => {
   let localStorageData = localStorage.getItem('FormData');
     if(localStorageData){
     setStoredData(JSON.parse(localStorageData));
   console.log("type of storedData",typeof storedData);
-//console.log("storedData", storedData)
-//console.log("localStorageData", localStorageData )
- // console.log("typeof localStorageData", typeof localStorageData);
-//  console.log("entries of localStorageData",localStorageData);
-//  const myArray = localStorageData.split(",");
-//  console.log(myArray);
-//  console.log("type of myArray",typeof myArray);
+
   }
 }, [])
-//const variable = localStorage.getItem('FormData');
 
 
 
-const handleClick = (i:number):void =>
+
+const handleDelete = (i:number):void =>
 {
   setStoredData(existingData =>{
-    return existingData.filter((item, currenti) => currenti !==i)
+    const updatedData = existingData.filter((item, currenti) => currenti !==i)
+    localStorage.setItem('FormData',JSON.stringify(updatedData))
+    return updatedData;
   })
  
 }
+
   return (
    <>
    
@@ -81,8 +83,8 @@ const handleClick = (i:number):void =>
     <p className='max-w-2 truncate'>{item.email}</p>
     <p>{item.course}</p>
     <div className='flex flex-col gap-1'> 
-    <button className='h-fit w-fit px-2 py-2 rounded-lg text-white bg-red-500 hover:bg-red-800' onClick={()=>handleClick(i)}>Del</button>
-    <button className='h-fit w-fit px-2 py-2 rounded-lg text-white bg-green-400 hover:bg-green-600'>Edit</button>
+    <button className='h-fit w-fit px-2 py-2 rounded-lg text-white bg-red-500 hover:bg-red-800' onClick={()=>handleDelete(i)}>Del</button>
+    <button className='h-fit w-fit px-2 py-2 rounded-lg text-white bg-green-400 hover:bg-green-600' onClick={() => props.handleEdit(i)}>Edit</button>
     </div>
   </div>
 ))}
