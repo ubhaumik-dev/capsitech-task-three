@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useEffect } from "react";
-
+import { useState } from "react";
 interface EditFormProps{
   editIndex: number | null;
   setEditIndex: React.Dispatch<React.SetStateAction<number|null>>
@@ -12,14 +12,42 @@ interface EditFormProps{
 
 const StudentForm = (props: EditFormProps) => {
   const navigate = useNavigate();
-  useEffect(() => {
+   const [values,setValues] = useState({
+    firstName: '',
+    Age:'',
+    email: '',
+    course: ''
+  })
+    useEffect(() => {
     const index = props.editIndex;
     if(index !==null)
     {
       console.log("index is" ,index);
-
+      const item = localStorage.getItem('FormData');
+      if(item!== null){
+    const array = JSON.parse(item);
+    console.log(array[index]);
+    setValues(array[index]);
+    //console.log("values",values);
+      }
     }
   }, [])
+ 
+  
+ function handleChange(e:any)
+  {
+    let value = e.target.value;
+    let name = e.target.name;
+    console.log(value);
+    console.log(name);
+    setValues((preValue) =>{
+      return {
+        ...preValue,
+        [name]:value
+      }
+    })
+  }
+
   
   return (
     <Formik
@@ -34,16 +62,18 @@ const StudentForm = (props: EditFormProps) => {
           .required("Please select an option.")
           .oneOf(["Java", "C++", "Python"], "Invalid option selected."),
       })}
-      onSubmit={(values) => {
+    onSubmit={(values) => {
+   
         const storedData = localStorage.getItem("FormData");
-        let parsedData = storedData ? JSON.parse(storedData) : [];
-        if (!Array.isArray(parsedData)) {
-          parsedData = [];
-        }
-        parsedData.push(values);
-        localStorage.setItem("FormData", JSON.stringify(parsedData));
-        navigate('/')
-      }}
+      let parsedData = storedData ? JSON.parse(storedData) : [];
+      if (!Array.isArray(parsedData)) {
+        parsedData = [];
+      }
+      parsedData.push(values);
+      localStorage.setItem("FormData", JSON.stringify(parsedData));
+      navigate('/')
+    }}
+      
     >
       {(formik) => (
         <div className="body max-w-lg w-full mx-auto">
@@ -54,7 +84,9 @@ const StudentForm = (props: EditFormProps) => {
               id="firstName"
               type="text"
               placeholder="Enter your name"
-              {...formik.getFieldProps("firstName")}
+              name='firstName'
+              onChange={handleChange}
+              value = {values.firstName}
             />
             {formik.touched.firstName && formik.errors.firstName ? (
               <div>{formik.errors.firstName}</div>
@@ -64,8 +96,10 @@ const StudentForm = (props: EditFormProps) => {
             <input
               id="Age"
               type="text"
+              name='Age'
               placeholder="Enter your age"
-              {...formik.getFieldProps("Age")}
+              onChange={handleChange}
+              value = {values.Age}
             />
             {formik.touched.Age && formik.errors.Age ? (
               <div>{formik.errors.Age}</div>
@@ -75,8 +109,10 @@ const StudentForm = (props: EditFormProps) => {
             <input
               id="email"
               type="email"
+              name ='email'
               placeholder="Enter your email"
-              {...formik.getFieldProps("email")}
+              onChange={handleChange}
+              value = {values.email}
             />
             {formik.touched.email && formik.errors.email ? (
               <div>{formik.errors.email}</div>
@@ -84,11 +120,11 @@ const StudentForm = (props: EditFormProps) => {
             <label htmlFor="Course" className="course">
               Course
             </label>
-            <select id="course" {...formik.getFieldProps("course")}>
+            <select id="course"   onChange={handleChange} value = {values.course} name='course'>
               <option disabled value="">
                 Select a course{" "}
               </option>
-              <option value="Java"> Java</option>
+              <option value="Java">Java</option>
               <option value="C++">C++ </option>
               <option value="Python">Python </option>
             </select>
