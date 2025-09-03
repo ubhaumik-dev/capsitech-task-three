@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 function App() {
 const [editIndex, setEditIndex] = useState<number|null>(null);
+
 const navigate = useNavigate();
 const handleEdit = (i:number) =>{
   const editIndex =i;
@@ -17,7 +18,7 @@ const handleEdit = (i:number) =>{
   return (
     <>
 <Routes>
-   <Route path="/" element={<Data handleEdit = {handleEdit} />} />
+   <Route path="/" element={<Data handleEdit = {handleEdit}  />} />
    <Route path='studentForm' element={<StudentForm editIndex={editIndex} setEditIndex={setEditIndex}/>}/>
 </Routes>
     </>

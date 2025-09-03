@@ -12,7 +12,7 @@ interface EditFormProps{
 
 const StudentForm = (props: EditFormProps) => {
   const navigate = useNavigate();
-   const [values,setValues] = useState({
+   const [formData,setFormData] = useState({
     firstName: '',
     Age:'',
     email: '',
@@ -22,12 +22,12 @@ const StudentForm = (props: EditFormProps) => {
     const index = props.editIndex;
     if(index !==null)
     {
-      console.log("index is" ,index);
+      //console.log("index is" ,index);
       const item = localStorage.getItem('FormData');
       if(item!== null){
     const array = JSON.parse(item);
     console.log(array[index]);
-    setValues(array[index]);
+    setFormData(array[index]);
     //console.log("values",values);
       }
     }
@@ -40,12 +40,13 @@ const StudentForm = (props: EditFormProps) => {
     let name = e.target.name;
     console.log(value);
     console.log(name);
-    setValues((preValue) =>{
+    setFormData((preValue) =>{
       return {
         ...preValue,
         [name]:value
       }
     })
+    console.log('formData is ',formData);
   }
 
   
@@ -62,18 +63,27 @@ const StudentForm = (props: EditFormProps) => {
           .required("Please select an option.")
           .oneOf(["Java", "C++", "Python"], "Invalid option selected."),
       })}
-    onSubmit={(values) => {
-   
-        const storedData = localStorage.getItem("FormData");
+    onSubmit={(formData,editIndex) => {
+      if(editIndex !==null){
+          const storedData = localStorage.getItem("FormData");
       let parsedData = storedData ? JSON.parse(storedData) : [];
       if (!Array.isArray(parsedData)) {
         parsedData = [];
       }
-      parsedData.push(values);
+      parsedData.push(formData);
       localStorage.setItem("FormData", JSON.stringify(parsedData));
       navigate('/')
+      }
+    else{
+      const storedData = localStorage.getItem('FormData');
+      if(storedData)
+      {
+        JSON.parse(storedData)
+        const value = storedData[editIndex];
+        console.log('value is', value);
+      }
     }}
-      
+  } 
     >
       {(formik) => (
         <div className="body max-w-lg w-full mx-auto">
@@ -86,7 +96,7 @@ const StudentForm = (props: EditFormProps) => {
               placeholder="Enter your name"
               name='firstName'
               onChange={handleChange}
-              value = {values.firstName}
+              value = {formData.firstName}
             />
             {formik.touched.firstName && formik.errors.firstName ? (
               <div>{formik.errors.firstName}</div>
@@ -99,7 +109,7 @@ const StudentForm = (props: EditFormProps) => {
               name='Age'
               placeholder="Enter your age"
               onChange={handleChange}
-              value = {values.Age}
+              value = {formData.Age}
             />
             {formik.touched.Age && formik.errors.Age ? (
               <div>{formik.errors.Age}</div>
@@ -112,7 +122,7 @@ const StudentForm = (props: EditFormProps) => {
               name ='email'
               placeholder="Enter your email"
               onChange={handleChange}
-              value = {values.email}
+              value = {formData.email}
             />
             {formik.touched.email && formik.errors.email ? (
               <div>{formik.errors.email}</div>
@@ -120,7 +130,7 @@ const StudentForm = (props: EditFormProps) => {
             <label htmlFor="Course" className="course">
               Course
             </label>
-            <select id="course"   onChange={handleChange} value = {values.course} name='course'>
+            <select id="course"   onChange={handleChange} value = {formData.course} name='course'>
               <option disabled value="">
                 Select a course{" "}
               </option>
