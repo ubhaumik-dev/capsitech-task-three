@@ -1,19 +1,19 @@
 @import "tailwindcss";
+
+    @layer base {
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+    }
 .body{
   max-height: 100vh;
-  width: 100vw;
+
 }
-.form{
-  height: 50%;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-}
-.submitBtn{
-  background-color: #3776db;
-  margin-top: 20px
-}
+
+
 
 .form label{
   margin-top: 20px;
@@ -21,14 +21,7 @@
 .course{
   margin-top: 20px;
 }
-.addNew{
-  background-color: #3776db;
-  color: white;
-  height: fit-content;
-  width: fit-content;
-  padding: 12px;
-  border-radius: 5px;
-}
+
 .addNew:hover{
   color: black;
 }
@@ -45,20 +38,7 @@
 .NoData p{
   font-weight: 700;
 }
-.Data{
-  width: 100vw;
-  height: 10vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  position: fixed;
-  top: 0px;
-  margin-top: 0px;
-}
-.Data p{
-  font-weight: 700;
-  font-size: larger;
-}
+
 .container{
   max-width: 1200px;
   margin: 0px auto;

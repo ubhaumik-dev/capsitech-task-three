@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useEffect } from "react";
 import { useState } from "react";
+
+
 interface EditFormProps{
   editIndex: number | null;
   setEditIndex: React.Dispatch<React.SetStateAction<number|null>>
+  
 }
-
-
 
 const StudentForm = (props: EditFormProps) => {
   const navigate = useNavigate();
@@ -24,9 +25,9 @@ const StudentForm = (props: EditFormProps) => {
     {
       //console.log("index is" ,index);
       const item = localStorage.getItem('FormData');
-      if(item!== null){
+      if(item){
     const array = JSON.parse(item);
-    console.log(array[index]);
+    //console.log(array[index]);
     setFormData(array[index]);
     //console.log("values",values);
       }
@@ -34,25 +35,13 @@ const StudentForm = (props: EditFormProps) => {
   }, [])
  
   
- function handleChange(e:any)
-  {
-    let value = e.target.value;
-    let name = e.target.name;
-    console.log(value);
-    console.log(name);
-    setFormData((preValue) =>{
-      return {
-        ...preValue,
-        [name]:value
-      }
-    })
-    console.log('formData is ',formData);
-  }
+
 
   
   return (
     <Formik
-      initialValues={{ firstName: "", Age: "", email: "", course: "" }}
+     enableReinitialize
+      initialValues={formData}
       validationSchema={Yup.object({
         firstName: Yup.string()
           .max(15, "Must be 15 characters or less")
@@ -63,85 +52,91 @@ const StudentForm = (props: EditFormProps) => {
           .required("Please select an option.")
           .oneOf(["Java", "C++", "Python"], "Invalid option selected."),
       })}
-    onSubmit={(formData,editIndex) => {
-      if(editIndex !==null){
-          const storedData = localStorage.getItem("FormData");
-      let parsedData = storedData ? JSON.parse(storedData) : [];
+  onSubmit={(values) => {
+    const storedData = localStorage.getItem("FormData");
+    let parsedData = storedData ? JSON.parse(storedData) : [];
+    if (props.editIndex === null) {
+      
       if (!Array.isArray(parsedData)) {
         parsedData = [];
       }
-      parsedData.push(formData);
+      parsedData.push(values);
       localStorage.setItem("FormData", JSON.stringify(parsedData));
-      navigate('/')
+      navigate('/');
+    } else {
+      
+      if (Array.isArray(parsedData)) {
+        parsedData[props.editIndex] = values;
+        localStorage.setItem("FormData", JSON.stringify(parsedData));
+        props.setEditIndex(null);
+        navigate('/');
       }
-    else{
-      const storedData = localStorage.getItem('FormData');
-      if(storedData)
-      {
-        JSON.parse(storedData)
-        const value = storedData[editIndex];
-        console.log('value is', value);
-      }
-    }}
-  } 
+    }
+  }}
     >
       {(formik) => (
-        <div className="body max-w-lg w-full mx-auto">
-          <form className="form" onSubmit={formik.handleSubmit}>
-            <h1 className="heading"> Student Registration Form</h1>
-            <label htmlFor="firstName">First Name</label>
+        <div className="container max-w-lg w-full mx-auto">
+          <form className="form h-auto w-2/4 flex flex-col m-auto mt-20 lg:space-y-4" onSubmit={formik.handleSubmit}>
+            <h1 className="heading text-xl font-extrabold md:text-4xl lg:text-5xl"> Student Registration Form</h1>
+            <label htmlFor="firstName" className="md:text-xl lg:text-2xl">First Name</label>
             <input
               id="firstName"
               type="text"
               placeholder="Enter your name"
               name='firstName'
-              onChange={handleChange}
-              value = {formData.firstName}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value = {formik.values.firstName}
+              className="md:text-xl lg:text-2xl px-2"
             />
             {formik.touched.firstName && formik.errors.firstName ? (
-              <div>{formik.errors.firstName}</div>
+              <div className="md:text-xl lg:text-2xl">{formik.errors.firstName}</div>
             ) : null}
 
-            <label htmlFor="Age">Age</label>
+            <label htmlFor="Age" className="md:text-xl lg:text-2xl">Age</label>
             <input
               id="Age"
               type="text"
               name='Age'
               placeholder="Enter your age"
-              onChange={handleChange}
-              value = {formData.Age}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value = {formik.values.Age}
+              className="md:text-xl lg:text-2xl px-2"
             />
             {formik.touched.Age && formik.errors.Age ? (
-              <div>{formik.errors.Age}</div>
+              <div  className="md:text-xl lg:text-2xl">{formik.errors.Age}</div>
             ) : null}
 
-            <label htmlFor="Email">Email</label>
+            <label htmlFor="Email" className="md:text-xl lg:text-2xl">Email</label>
             <input
               id="email"
               type="email"
               name ='email'
               placeholder="Enter your email"
-              onChange={handleChange}
-              value = {formData.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value = {formik.values.email}
+              className="md:text-xl lg:text-2xl px-2"
             />
             {formik.touched.email && formik.errors.email ? (
-              <div>{formik.errors.email}</div>
+              <div  className="md:text-xl lg:text-2xl">{formik.errors.email}</div>
             ) : null}
-            <label htmlFor="Course" className="course">
+            <label htmlFor="Course" className="course md:text-xl lg:text-2xl">
               Course
             </label>
-            <select id="course"   onChange={handleChange} value = {formData.course} name='course'>
+            <select id="course"  className="md:text-xl md:w-40 lg:text-xl " onChange={formik.handleChange}  onBlur={formik.handleBlur}  value = {formik.values.course} name='course'>
               <option disabled value="">
                 Select a course{" "}
               </option>
-              <option value="Java">Java</option>
-              <option value="C++">C++ </option>
-              <option value="Python">Python </option>
+              <option className="lg:text-xl" value="Java">Java</option>
+              <option className="lg:text-xl" value="C++">C++ </option>
+              <option className="lg:text-xl" value="Python">Python </option>
             </select>
             {formik.touched.course && formik.errors.course ? (
-              <div>{formik.errors.course}</div>
+              <div  className="md:text-xl lg:text-2xl">{formik.errors.course}</div>
             ) : null}
-            <button type="submit" className="submitBtn">
+            <button type="submit" className="submitBtn  mt-10  h-fit w-fit px-6 py-2 bg-blue-600 rounded-lg text-white lg:text-4xl xl:py-4">
               Submit
             </button>
           </form>
