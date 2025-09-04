@@ -76,7 +76,7 @@ const StudentForm = (props: EditFormProps) => {
     >
       {(formik) => (
         <div className="container max-w-lg w-full mx-auto">
-          <form className="form h-auto w-2/4 flex flex-col m-auto mt-20 lg:space-y-4" onSubmit={formik.handleSubmit}>
+          <form className="form h-auto w-2/4 flex flex-col m-auto mt-20 lg:space-y-0.5" onSubmit={formik.handleSubmit}>
             <h1 className="heading text-xl font-extrabold md:text-4xl lg:text-5xl"> Student Registration Form</h1>
             <label htmlFor="firstName" className="md:text-xl lg:text-2xl">First Name</label>
             <input
@@ -136,7 +136,7 @@ const StudentForm = (props: EditFormProps) => {
             {formik.touched.course && formik.errors.course ? (
               <div  className="md:text-xl lg:text-2xl">{formik.errors.course}</div>
             ) : null}
-            <button type="submit" className="submitBtn  mt-10  h-fit w-fit px-6 py-2 bg-blue-600 rounded-lg text-white lg:text-4xl xl:py-4">
+            <button type="submit" className="submitBtn  mt-4  h-fit w-fit px-6 py-2 bg-blue-600 rounded-lg text-white hover:bg-blue-800 lg:text-xl ">
               Submit
             </button>
           </form>

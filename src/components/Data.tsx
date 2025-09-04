@@ -73,7 +73,7 @@ const onChange = (e:any)=>{
         <div className=' max-w-screen-lg w-full mx-auto mt-20 '> 
           <div className="container h-10 flex flex-row items-center justify-evenly">
             <p className='font-extrabold md:text-3xl lg:text-4xl'>Submitted Entries</p>
-            <Link className="h-fit w-fit px-2 py-2 bg-blue-600 rounded-md text-md text-white lg:text-xl xl:text-3xl" id="dataBtn" to="/studentForm" >
+            <Link className="h-fit w-fit px-2 py-2 bg-blue-600 rounded-md text-md text-white hover:bg-blue-800 lg:text-xl xl:text-3xl" id="dataBtn" to="/studentForm" >
               Add New Data
             </Link>
           </div> 
