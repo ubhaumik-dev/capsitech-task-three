@@ -64,7 +64,7 @@ const onChange = (e:any)=>{
   return (
    <>
    
-    {!storedData ? (
+    {storedData.length=== 0 ? (
        <NoData/>
       ) : (
         <>

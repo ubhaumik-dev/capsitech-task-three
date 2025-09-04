@@ -8,10 +8,7 @@
         scroll-behavior: smooth;
       }
     }
-.body{
-  max-height: 100vh;
 
-}
 
 
 
@@ -25,19 +22,7 @@
 .addNew:hover{
   color: black;
 }
-.NoData{
-  width: 100vw;
-  height: 10vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  position: fixed;
-  top: 0px;
-  margin-top: 0px;
-}
-.NoData p{
-  font-weight: 700;
-}
+
 
 .container{
   max-width: 1200px;
