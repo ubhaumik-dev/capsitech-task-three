@@ -47,12 +47,14 @@ const StudentForm = (props: EditFormProps) => {
           .max(15, "Must be 15 characters or less")
           .required("Required"),
         Age: Yup.string().required("Required"),
-        email: Yup.string().email("Invalid email address").required("Required"),
+        email: Yup.string().required("Required").matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Invalid email address'),
         course: Yup.string()
           .required("Please select an option.")
           .oneOf(["Java", "C++", "Python"], "Invalid option selected."),
       })}
   onSubmit={(values) => {
+    //const errors ={}
+   
     const storedData = localStorage.getItem("FormData");
     let parsedData = storedData ? JSON.parse(storedData) : [];
     if (props.editIndex === null) {

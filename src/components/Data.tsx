@@ -61,7 +61,7 @@ const onChange = (e:any)=>{
   setFilteredData(filtered);
     console.log("filteredData is",filtered)
 }
-  return (
+return (
    <>
    
     {storedData.length=== 0 ? (
@@ -86,7 +86,7 @@ const onChange = (e:any)=>{
           </select>
           </div>
           {filtered?  <div className='mt-10'>
-           <div className='container  w-full grid grid-cols-6 text-xs font-extrabold mt-10  md:text-lg lg:text-2xl '>
+           <div className='container  w-full grid grid-cols-[10%_10%_15%_40%_10%_10%] text-xs font-extrabold mt-10  md:text-lg lg:text-2xl '>
             <p> SL NO.</p>
             <p> NAME</p>
             <p> AGE</p>
@@ -96,11 +96,11 @@ const onChange = (e:any)=>{
           </div>
         <div className='h-fit w-full text-xs bg-amber-200 px-2 py-4 container max-h-auto mt-50  md:text-xl md:py-10 '>
          {filteredData.map((item, i) => (
-  <div key={i} className='grid grid-cols-6 space-y-8 md:space-y-10 lg:space-y-14 lg:text-2xl'>
+  <div key={i} className='grid grid-cols-[10%_10%_15%_40%_10%_10%] space-y-8 md:space-y-10 lg:space-y-14 lg:text-2xl'>
     <p>{i+1}</p>
     <p>{item.firstName}</p>
     <p>{item.Age}</p>
-    <p className='max-w-2 truncate'>{item.email}</p>
+    <p className='max-w-2'>{item.email}</p>
     <p>{item.course}</p>
     <div className='flex flex-col gap-1 md:flex-row md:gap-3'> 
     <button className='h-fit w-fit px-2 py-1 rounded-lg text-white bg-red-500 hover:bg-red-800' onClick={()=>handleDelete(i)}>Del</button>
@@ -111,7 +111,7 @@ const onChange = (e:any)=>{
       </div>
       </div>: <>
        <div className='mt-10'>
-           <div className='container  w-full grid grid-cols-6 text-xs font-extrabold mt-10  md:text-lg lg:text-2xl '>
+           <div className='container  w-full grid grid-cols-[10%_10%_15%_40%_10%_10%] text-xs font-extrabold mt-10  md:text-lg lg:text-2xl '>
             <p> SL NO.</p>
             <p> NAME</p>
             <p> AGE</p>
@@ -121,11 +121,11 @@ const onChange = (e:any)=>{
           </div>
         <div className='h-fit w-full text-xs bg-amber-200 px-2 py-4 container max-h-auto mt-50  md:text-xl md:py-10 '>
          {storedData.map((item, i) => (
-  <div key={i} className='grid grid-cols-6 space-y-8 md:space-y-10 lg:space-y-14 lg:text-2xl'>
+  <div key={i} className='grid grid-cols-[10%_10%_15%_40%_10%_10%]  space-y-8 md:space-y-10 lg:space-y-14 lg:text-2xl'>
     <p>{i+1}</p>
     <p>{item.firstName}</p>
     <p>{item.Age}</p>
-    <p className='max-w-2 truncate'>{item.email}</p>
+    <p className='max-w-2'>{item.email}</p>
     <p>{item.course}</p>
     <div className='flex flex-col gap-1 md:flex-row md:gap-3'> 
     <button className='h-fit w-fit px-2 py-1 rounded-lg text-white bg-red-500 hover:bg-red-800' onClick={()=>handleDelete(i)}>Del</button>
